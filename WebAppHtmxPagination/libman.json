@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "twitter-bootstrap@5.2.0",
+      "destination": "wwwroot/lib/bootstrap/dist"
+    },
+    {
+      "library": "moment.js@2.29.4",
+      "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "bootstrap-select@1.13.18",
+      "destination": "wwwroot/lib/bootstrap-select/"
+    },
+    {
+      "library": "htmx@1.8.0",
+      "destination": "wwwroot/lib/htmx/"
+    },
+    //{
+    //  "library": "tempus-dominus@6.0.0-beta9",
+    //  "destination": "wwwroot/lib/tempus-dominus/"
+    //},
+    {
+      "library": "popper.js@2.11.5",
+      "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "library": "bootstrap-icons@1.9.1",
+      "destination": "wwwroot/lib/bootstrap-icons/"
+    }
+  ]
+}
