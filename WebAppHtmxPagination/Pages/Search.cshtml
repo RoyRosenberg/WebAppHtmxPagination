@@ -1,0 +1,23 @@
+﻿@page "{id?}"
+@model SearchModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div id="person-main">
+    @await Html.PartialAsync("_PersonPartial", Model.PersonModel)
+</div>
+
+@section Scripts
+    {
+    <script>
+        htmx.onLoad(function (content) {
+            $('#users').selectpicker();
+            $('#priority').selectpicker();
+        });
+        //$(document).ready(function() {
+        //    $('#users').selectpicker();
+        //    $('#priority').selectpicker();
+        //});
+    </script>
+}

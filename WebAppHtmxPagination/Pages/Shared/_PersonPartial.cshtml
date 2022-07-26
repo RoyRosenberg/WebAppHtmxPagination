@@ -1,0 +1,141 @@
+﻿@model PersonModel
+
+<title>Search pg.@Model.PagingInfo.CurrentPage | Pagination Demo</title>
+
+<!-- Search panel -->
+<div class="row">
+    <div class="col mb-2">
+        <div class="card card-body">
+            <form hx-post="/ActionItems/Search" hx-indicator="#search-indicator" hx-swap="innerHTML" hx-target="#action-item-main">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <select id="users" asp-items='@(List<SelectListItem>)ViewData["Users"]' asp-for="@Model.Filter.UserId" data-live-search="true" class="selectpicker form-control mb-2 mr-sm-2"></select>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="input-group capito-date-picker mb-2 mr-sm-2" id="timepickerFrom" data-bs-target-input="nearest">
+                            <input asp-for="@Model.Filter.DueDateMax" type="text" class="form-control datetimepicker-input" placeholder="Due Date" data-bs-target="#timepickerFrom" />
+                            <span class="input-group-text" data-bs-target="#timepickerFrom" data-bs-toggle="datetimepicker">
+                                <i class="bi bi-calendar-fill"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <select id="priority" asp-for="@Model.Filter.Priority" class="form-control" placeholder="Priority from">
+                            <option value="">All Priorities</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex flex-row justify-content-start">
+                            <div class="me-1">
+                                <button class="btnSearchBtn btn btn-secondary btn-outline-warning" type="submit" name="submit" value="Search"><i class="bi bi-search"></i> Search</button>
+                            </div>
+                           
+                           
+                            <div class="pt-1">
+                                <div id="search-indicator" class="spinner-border text-secondary htmx-indicator" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="ml-1 text-success font-weight-light">
+                            <span class="badge rounded-pill bg-success">@Model.PagingInfo.TotalItems</span>  items found
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@if (Model.Result.Count == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        No Data!
+    </div>
+}
+else
+{ <!-- Search result -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+               hx-get
+               hx-push-url="/Search/@(Model.PagingInfo.CurrentPage)"
+               hx-page-handler="Partial"
+               hx-route-id="@(Model.PagingInfo.CurrentPage - 1)"
+               hx-target="#person-main"
+               hx-swap="innerHTML"
+               href="#"
+               >Previous</a>
+            </li>
+         
+            <li class="page-item active">
+                <a class="page-link"
+               hx-get
+               hx-push-url="/Search/@(Model.PagingInfo.CurrentPage)"
+               hx-page-handler="Partial"
+               hx-route-id="@(Model.PagingInfo.CurrentPage)"
+               hx-target="#person-main"
+               hx-swap="innerHTML"
+               href="#">@(Model.PagingInfo.CurrentPage)</a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link"
+               hx-get
+               hx-push-url="/Search/@(Model.PagingInfo.CurrentPage)"
+               hx-page-handler="Partial"
+               hx-route-id="@(Model.PagingInfo.CurrentPage + 1)"
+               hx-target="#person-main"
+               hx-swap="innerHTML"
+               href="#"
+               >Next</a>
+            </li>
+        </ul>
+    </nav>
+
+    <table class="table table-striped" style="table-layout:fixed">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Result)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.FirstName
+                    </td>
+                    <td>
+                        @item.LastName
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
